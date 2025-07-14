@@ -387,6 +387,20 @@ class Test_Autofix(unittest.TestCase):
                     'resources/empty_autofix.txt',
                 ),
             ),
+            TestCase(
+                name='trailing_whitespace',
+                input=os.path.join(
+                    os.path.dirname(os.path.abspath(__file__)),
+                    'resources/trailing_whitespace_input.txt',
+                ),
+                expected_check=[
+                    'Lines with trailing whitespace: [6, 8]',
+                ],
+                expected_fix=os.path.join(
+                    os.path.dirname(os.path.abspath(__file__)),
+                    'resources/trailing_whitespace_autofix.txt',
+                ),
+            ),
         ]
         for case in testcases:
             actual = os.path.join(

@@ -19,13 +19,23 @@ class CodeownersViolations:
         self.sections_with_non_existing_paths = []
         self.non_existing_paths = {}
         self.duplicated_sections = []
+        self.lines_with_trailing_whitespace = []
 
 
-def check(codeowners_data):
+def check(codeowners_data, file_path):
     violations = CodeownersViolations()
 
     if _is_codeowners_empty(codeowners_data):
         return violations
+
+    # Are there trailing whitespaces
+    violations.lines_with_trailing_whitespace = _get_lines_with_trailing_whitespace(
+        file_path,
+    )
+    if violations.lines_with_trailing_whitespace:
+        violations.violation_error_messages.append(
+            f'Lines with trailing whitespace: {violations.lines_with_trailing_whitespace}',
+        )
 
     # Are custom section names sorted?
     sort_sections_names_key = cmp_to_key(sort_section_names)
@@ -80,6 +90,15 @@ def _is_codeowners_empty(codeowners_data):
     if all(not section.get_paths() for section in codeowners_data):
         empty = True
     return empty
+
+
+def _get_lines_with_trailing_whitespace(file_path):
+    lines_with_trailing_whitespace = []
+    with open(file_path) as f:
+        for i, line in enumerate(f, 1):
+            if line.endswith(' \n') or line.endswith('\t\n'):
+                lines_with_trailing_whitespace.append(i)
+    return lines_with_trailing_whitespace
 
 
 def _get_duplicated_sections(codeowners_data):

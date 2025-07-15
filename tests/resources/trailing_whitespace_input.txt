@@ -1,0 +1,9 @@
+### CODEOWNERS ###
+#
+# This is a test case for trailing whitespace
+#
+
+# comment with trailing whitespace 
+[SECTION1]
+path1 @owner 
+path2 @owner

@@ -7,6 +7,7 @@
 #   - paths in a section must be unique
 #   - paths must exist
 #   - there must be no duplicated sections
+#   - there must not be trailing whitespace
 #
 from __future__ import annotations
 
@@ -32,7 +33,7 @@ class OwnersList:
         self.autofix = not no_autofix
 
     def lint(self):
-        violations = check(self.codeowners_data)
+        violations = check(self.codeowners_data, self.file_path)
         if self.autofix:
             fix(self.codeowners_data, violations, self.file_path)
         return violations

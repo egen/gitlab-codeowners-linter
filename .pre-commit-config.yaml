@@ -3,6 +3,7 @@ repos:
     rev: v5.0.0
     hooks:
     -   id: trailing-whitespace
+        exclude: ^tests/resources/trailing_whitespace_input.txt$
     -   id: check-yaml
     -   id: double-quote-string-fixer
 -   repo: https://github.com/asottile/setup-cfg-fmt

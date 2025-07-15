@@ -144,14 +144,15 @@ def _update_codeowners_file(codeowners_data, file_path):
                 f.write('\n')
             if section.comments:
                 for comment_line in section.comments:
-                    f.write(f'{comment_line}\n')
+                    f.write(f'{comment_line.rstrip()}\n')
             if section.codeowner_section != DEFAULT_SECTION:
-                f.write(f'{section.codeowner_section}')
+                f.write(f'{section.codeowner_section.rstrip()}')
             if section.entries:
                 f.write('\n')
                 for entry in section.entries:
                     if entry.comments:
                         for comment_line in entry.comments:
-                            f.write(f'{comment_line}\n')
+                            f.write(f'{comment_line.rstrip()}\n')
                     owners = ' '.join(str(x) for x in entry.owners)
-                    f.write(f'{entry.path} {owners}\n')
+                    line_to_write = f'{entry.path} {owners}'
+                    f.write(f'{line_to_write.rstrip()}\n')
